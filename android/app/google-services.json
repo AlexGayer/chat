@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "406559053496",
+    "project_id": "chat-5f9f7",
+    "storage_bucket": "chat-5f9f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406559053496:android:3ef7daa97a8b384726064d",
+        "android_client_info": {
+          "package_name": "br.com.infinitum.chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8ctAleV3ZSmr2yRWGajsZwo7JCMvtuak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
