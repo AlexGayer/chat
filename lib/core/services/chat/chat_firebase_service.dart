@@ -10,15 +10,18 @@ class ChatFirebaseService implements ChatService {
     final store = FirebaseFirestore.instance;
     final snapshots = store
         .collection('chat')
-        .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
+        .withConverter(
+          fromFirestore: _fromFirestore,
+          toFirestore: _toFirestore,
+        )
         .orderBy('createdAt', descending: true)
         .snapshots();
 
-    return snapshots.map(
-      (snapshot) => snapshot.docs.map((doc) {
+    return snapshots.map((snapshot) {
+      return snapshot.docs.map((doc) {
         return doc.data();
-      }).toList(),
-    );
+      }).toList();
+    });
 
     // return Stream<List<ChatMessage>>.multi((controller) {
     //   snapshots.listen((snapshot) {
@@ -35,7 +38,7 @@ class ChatFirebaseService implements ChatService {
     final store = FirebaseFirestore.instance;
 
     final msg = ChatMessage(
-      id: "",
+      id: '',
       text: text,
       createdAt: DateTime.now(),
       userId: user.id,
@@ -45,27 +48,21 @@ class ChatFirebaseService implements ChatService {
 
     final docRef = await store
         .collection('chat')
-        .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
+        .withConverter(
+          fromFirestore: _fromFirestore,
+          toFirestore: _toFirestore,
+        )
         .add(msg);
 
     final doc = await docRef.get();
     return doc.data()!;
   }
 
-// Map<String, dynamic> => ChatMessage
-  ChatMessage _fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> doc, SnapshotOptions? options) {
-    return ChatMessage(
-        id: doc.id,
-        text: doc['text'],
-        createdAt: DateTime.parse(doc['createdAt']),
-        userId: doc['userId'],
-        userName: doc['userName'],
-        userImageUrl: doc['userImageUrl']);
-  }
-
   // ChatMessage => Map<String, dynamic>
-  Map<String, dynamic> _toFirestore(ChatMessage msg, SetOptions? options) {
+  Map<String, dynamic> _toFirestore(
+    ChatMessage msg,
+    SetOptions? options,
+  ) {
     return {
       'text': msg.text,
       'createdAt': msg.createdAt.toIso8601String(),
@@ -73,5 +70,20 @@ class ChatFirebaseService implements ChatService {
       'userName': msg.userName,
       'userImageUrl': msg.userImageUrl,
     };
+  }
+
+  // Map<String, dynamic> => ChatMessage
+  ChatMessage _fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> doc,
+    SnapshotOptions? options,
+  ) {
+    return ChatMessage(
+      id: doc.id,
+      text: doc['text'],
+      createdAt: DateTime.parse(doc['createdAt']),
+      userId: doc['userId'],
+      userName: doc['userName'],
+      userImageUrl: doc['userImageUrl'],
+    );
   }
 }

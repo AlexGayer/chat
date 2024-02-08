@@ -23,11 +23,11 @@ class ChatPage extends StatelessWidget {
                 Icons.more_vert,
                 color: Theme.of(context).primaryIconTheme.color,
               ),
-              items: const [
+              items: [
                 DropdownMenuItem(
                   value: 'logout',
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(
                         Icons.exit_to_app,
                         color: Colors.black87,
@@ -75,9 +75,9 @@ class ChatPage extends StatelessWidget {
           ),
         ],
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: Column(
-          children: [
+          children: const [
             Expanded(child: Messages()),
             NewMessage(),
           ],
