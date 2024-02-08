@@ -10,14 +10,14 @@ class NewMessage extends StatefulWidget {
 }
 
 class _NewMessageState extends State<NewMessage> {
-  String _message = "";
+  String _message = '';
   final _messageController = TextEditingController();
 
   Future<void> _sendMessage() async {
     final user = AuthService().currentUser;
 
     if (user != null) {
-      ChatService().save(_message, user);
+      await ChatService().save(_message, user);
       _messageController.clear();
     }
   }
@@ -28,21 +28,22 @@ class _NewMessageState extends State<NewMessage> {
       children: [
         Expanded(
           child: TextField(
-            decoration: const InputDecoration(labelText: "Enviar mensagem"),
             controller: _messageController,
+            onChanged: (msg) => setState(() => _message = msg),
+            decoration: const InputDecoration(
+              labelText: 'Enviar mensagem...',
+            ),
             onSubmitted: (_) {
               if (_message.trim().isNotEmpty) {
                 _sendMessage();
               }
             },
-            onChanged: (msg) => setState(() {
-              _message = msg;
-            }),
           ),
         ),
         IconButton(
-            onPressed: _message.trim().isEmpty ? null : _sendMessage,
-            icon: const Icon(Icons.send))
+          icon: const Icon(Icons.send),
+          onPressed: _message.trim().isEmpty ? null : _sendMessage,
+        ),
       ],
     );
   }

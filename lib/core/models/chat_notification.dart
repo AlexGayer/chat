@@ -1,9 +1,9 @@
-class ChatNofification {
+class ChatNotification {
   final String title;
   final String body;
 
-  const ChatNofification({
-    required this.body,
+  const ChatNotification({
     required this.title,
+    required this.body,
   });
 }
